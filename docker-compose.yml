@@ -1,0 +1,27 @@
+services:
+  finplan-server:
+    #image: 172.31.21.242:5000/root/finplan-server:latest
+    image: 52.66.93.36:5000/root/finplan-server:latest
+    container_name: finplan-server
+    ports:
+      - 8083:8083
+    volumes:
+      #- type: bind
+      # source: /home/ec2-user/server_volume
+      # target: /app
+      - server_volume:/app
+    restart: always
+
+  finplan-client:
+    #image: 172.31.21.242:5000/root/finplan-client:latest
+    image: 52.66.93.36:5000/root/finplan-client:latest
+    container_name: finplan-client
+    ports:
+      - 3000:3000
+    restart: always
+    depends_on:
+      - finplan-server
+
+volumes:
+  - server_volume:/app
+restart : always
